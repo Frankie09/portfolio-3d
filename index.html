@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050b16" />
+  <title>Frankie — Interactive 3D Portfolio</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="world" tabindex="0" aria-label="Explore the interactive 3D portfolio"></canvas>
+
+    <section id="webgl-fallback" class="webgl-fallback hidden" aria-labelledby="fallback-title">
+      <div class="eyebrow">PORTFOLIO / ACCESSIBLE VIEW</div>
+      <h1 id="fallback-title">Frankie</h1>
+      <p>3D rendering is unavailable in this browser. You can still browse the portfolio sections here.</p>
+      <nav aria-label="Portfolio sections">
+        <button type="button" data-static-section="about">About</button>
+        <button type="button" data-static-section="projects">Projects</button>
+        <button type="button" data-static-section="skills">Skills</button>
+        <button type="button" data-static-section="experience">Experience</button>
+        <button type="button" data-static-section="education">Education</button>
+        <button type="button" data-static-section="contact">Contact</button>
+      </nav>
+      <p class="fallback-hint">Enable WebGL in your browser settings to explore the 3D workspace.</p>
+    </section>
+
+    <section id="intro" class="intro">
+      <div class="intro-grid"></div>
+      <div class="scanline"></div>
+      <div class="intro-content">
+        <div class="eyebrow"><span class="status-dot"></span> WELCOME</div>
+        <div class="holo-frame">
+          <div class="holo-corner c1"></div><div class="holo-corner c2"></div>
+          <div class="holo-corner c3"></div><div class="holo-corner c4"></div>
+          <div class="profile-icon"><span>F</span></div>
+          <p class="small-label">IDENTITY VERIFIED</p>
+          <h1>Hi, I'm <span>Frankie</span></h1>
+          <h2>Backend &amp; Fullstack Developer</h2>
+          <p class="intro-copy">I build backend services, APIs, and full-stack applications with a focus on reliable systems.</p>
+          <div class="identity-data">
+            <div><span>FOCUS</span><b>Backend · Fullstack</b></div>
+            <div><span>LOCATION</span><b>Surakarta, Indonesia</b></div>
+            <div><span>GITHUB</span><b>github.com/frankie09</b></div>
+          </div>
+          <button id="start-button" class="primary-button" disabled>INITIALIZE EXPLORATION <span>↗</span></button>
+          <p id="preview-loading" class="preview-loading" role="status" aria-live="polite">LOADING PROJECT PREVIEWS · 0/7</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="hud" class="hud hidden">
+      <div class="hud-brand"><span class="brand-mark">F</span><div><b>FRANKIE</b><small>PORTFOLIO EXPLORER</small></div></div>
+      <div class="hud-status"><span class="status-dot"></span> SYSTEM ONLINE</div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">LIGHT MODE</span></button>
+      <div class="hud-location"><small>LOCATION</small><b id="location-name">CENTRAL HUB</b></div>
+      <div class="controls-card">
+        <button type="button" class="controls-title" id="toggle-navigation" aria-expanded="true" aria-controls="navigation-details">NAVIGATION <span aria-hidden="true">−</span></button>
+        <div class="controls-details" id="navigation-details">
+          <div class="control-row"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move robot</span></div>
+          <div class="control-row"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd><span>Move robot</span></div>
+          <div class="control-row"><kbd>Shift</kbd><span>Sprint</span></div>
+          <div class="control-row"><kbd>Space</kbd><span>Jump</span></div>
+          <div class="control-row"><kbd>Drag</kbd><span>Orbit camera</span></div>
+          <div class="control-row"><kbd>E</kbd><span>Interact nearby</span></div>
+        </div>
+      </div>
+      <div class="touch-controls" id="touch-controls" aria-label="Touch controls">
+        <div class="touch-joystick" id="touch-joystick" role="application" aria-label="Virtual movement joystick">
+          <span class="joystick-ring"></span><span class="joystick-thumb" id="joystick-thumb"></span>
+        </div>
+        <div class="touch-actions"><button type="button" data-action="sprint" aria-pressed="false">SPRINT</button><button type="button" data-action="jump">JUMP</button><button type="button" data-action="interact">OPEN</button></div>
+      </div>
+      <div id="nearby-prompt" class="nearby-prompt hidden">PRESS <kbd>E</kbd> TO INTERACT</div>
+      <div class="bottom-hud"><span><i></i> EXPLORATION MODE</span><span>MOVE TO A HOLOGRAM TO EXPLORE</span></div>
+    </div>
+
+    <section id="detail-panel" class="detail-panel hidden" role="dialog" aria-modal="true" aria-labelledby="detail-title" aria-live="polite" tabindex="-1">
+      <button id="close-detail" class="close-button" aria-label="Close">×</button>
+      <div class="detail-kicker">HOLOGRAPHIC ARCHIVE <span id="detail-index">/ 01</span></div>
+      <div id="detail-image" class="detail-image"></div>
+      <h2 id="detail-title">Project title</h2>
+      <p id="detail-description"></p>
+      <div id="detail-tags" class="tag-list"></div>
+      <div id="detail-extra" class="detail-extra"></div>
+      <a id="detail-link" href="https://github.com/frankie09" target="_blank" rel="noopener noreferrer">OPEN LINK ↗</a>
+      <p class="detail-hint">Close this panel to continue exploring.</p>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
