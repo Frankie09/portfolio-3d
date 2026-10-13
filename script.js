@@ -541,6 +541,7 @@ let cameraYaw = 0;
 let cameraPitch = 0.18;
 let cameraDistance = 5.5;
 let dragging = false;
+let cameraPointerId = null;
 let lastPointer = { x: 0, y: 0 };
 let pointerMoved = false;
 let jumpVelocity = 0;
@@ -620,16 +621,20 @@ window.addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 window.addEventListener('blur', () => keys.clear());
 
 canvas.addEventListener('pointerdown', e => {
-  if (!started || detailOpen) return;
+  if (!started || detailOpen || e.button !== 0) return;
+  if (cameraPointerId !== null) return;
   dragging = true; pointerMoved = false; lastPointer = { x: e.clientX, y: e.clientY };
+  cameraPointerId = e.pointerId;
   canvas.setPointerCapture?.(e.pointerId);
 });
 canvas.addEventListener('wheel', event => {
   cameraDistance = THREE.MathUtils.clamp(cameraDistance + Math.sign(event.deltaY) * 0.45, 4.1, 8.2);
 }, { passive: true });
 canvas.addEventListener('pointerup', e => {
-  const wasClick = dragging && !pointerMoved;
+  if (e.pointerId !== cameraPointerId) return;
+  const wasClick = dragging && !pointerMoved && e.button === 0;
   dragging = false;
+  cameraPointerId = null;
   if (!wasClick || !started || detailOpen) return;
   pointer.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   raycaster.setFromCamera(pointer, camera);
@@ -637,8 +642,13 @@ canvas.addEventListener('pointerup', e => {
   const kiosk = hit?.object.userData.project ? hit.object : hit?.object.parent;
   if (kiosk?.userData.project) openDetails(kiosk.userData.project, kiosk.userData.index);
 });
+['pointercancel', 'lostpointercapture'].forEach(type => canvas.addEventListener(type, e => {
+  if (e.pointerId !== cameraPointerId) return;
+  dragging = false;
+  cameraPointerId = null;
+}));
 window.addEventListener('pointermove', e => {
-  if (!dragging || !started || detailOpen) return;
+  if (!dragging || e.pointerId !== cameraPointerId || !started || detailOpen) return;
   const dx = e.clientX - lastPointer.x, dy = e.clientY - lastPointer.y;
   if (Math.abs(dx) + Math.abs(dy) > 3) pointerMoved = true;
   if (!pointerMoved) return;
