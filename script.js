@@ -37,25 +37,25 @@ const PROJECTS = [
   {
     title: 'Mobile NFT App', year: '2021', category: 'Mobile',
     description: 'Native Android NFT marketplace application.',
-    tags: ['Java', 'Android'], image: './assets/img/nft.png', link: null,
+    tags: ['Java', 'Android'], image: './assets/img/nft.png', link: null, academic: true,
     position: [0, 2.0, -12.68]
   },
   {
     title: 'BookStore Web', year: '2021', category: 'Academic Projects',
     description: 'Bookstore site with PHP, HTML, CSS, Bootstrap.',
-    tags: ['PHP', 'Web'], image: './assets/img/rediframedia.png', link: null,
+    tags: ['PHP', 'Web'], image: './assets/img/rediframedia.png', link: null, academic: true,
     position: [3.2, 2.0, -12.68]
   },
   {
     title: 'Tourism Web', year: '2020', category: 'Academic Projects',
     description: 'Tourism Website.',
-    tags: ['Bootstrap', 'Web'], image: './assets/img/wisata.png', link: null,
+    tags: ['Bootstrap', 'Web'], image: './assets/img/wisata.png', link: null, academic: true,
     position: [6.4, 2.0, -12.68]
   },
   {
     title: 'MongoDB Research', year: '2022', category: 'Academic Projects',
     description: 'Database research & implementation with Flask.',
-    tags: ['Flask', 'DB'], image: './assets/img/mongodb.png', link: null,
+    tags: ['Flask', 'DB'], image: './assets/img/mongodb.png', link: null, academic: true,
     position: [9.6, 2.0, -12.68]
   }
 ];
@@ -396,6 +396,18 @@ for (const r of [1.1, 1.38, 1.62]) {
 
 // Project display kiosks. Each panel is a real 3D interaction target.
 const interactables = [];
+const academicTagCanvas = document.createElement('canvas');
+academicTagCanvas.width = 512;
+academicTagCanvas.height = 64;
+const academicTagContext = academicTagCanvas.getContext('2d');
+academicTagContext.clearRect(0, 0, academicTagCanvas.width, academicTagCanvas.height);
+academicTagContext.font = 'bold 31px Arial';
+academicTagContext.textAlign = 'center';
+academicTagContext.textBaseline = 'middle';
+academicTagContext.fillStyle = '#f4fbff';
+academicTagContext.fillText('ACADEMIC PROJECT', academicTagCanvas.width / 2, academicTagCanvas.height / 2);
+const academicTagTexture = new THREE.CanvasTexture(academicTagCanvas);
+academicTagTexture.colorSpace = THREE.SRGBColorSpace;
 function createKiosk(project, index) {
   const group = new THREE.Group();
   group.position.set(...project.position);
@@ -408,6 +420,21 @@ function createKiosk(project, index) {
   const preview = new THREE.Mesh(new THREE.PlaneGeometry(2.72, 1.12), new THREE.MeshBasicMaterial({ color: 0x102b45 }));
   preview.position.set(0, -0.12, 0.081);
   group.add(preview);
+  if (project.academic) {
+    const tagBackground = new THREE.Mesh(
+      new THREE.BoxGeometry(1.72, 0.18, 0.022),
+      new THREE.MeshBasicMaterial({ color: 0x087fce })
+    );
+    tagBackground.position.set(0, -0.77, 0.095);
+    group.add(tagBackground);
+    const tagText = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.58, 0.145),
+      new THREE.MeshBasicMaterial({ map: academicTagTexture, transparent: true, side: THREE.DoubleSide, depthWrite: false })
+    );
+    tagText.position.set(0, -0.77, 0.108);
+    tagText.renderOrder = 2;
+    group.add(tagText);
+  }
   // Fine bezel rails and status lights give each screen a finished monitor frame.
   const bezel = standard(0x2c9ed3, 0.35, 0.28, 0x0874c4, 0.8);
   addBox(group, [2.92, 0.025, 0.035], [0, 0.91, 0.085], bezel, { castShadow: false });
