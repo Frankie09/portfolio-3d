@@ -527,8 +527,8 @@ function createInfoTerminal(title, subtitle, position, tags, section) {
 }
 createInfoTerminal('ABOUT FRANKIE', 'Profile · Introduction · Capabilities', [-12.18, 2.7, 3.7], ['Backend', 'Fullstack', 'Surakarta'], 'about');
 createInfoTerminal('SKILLS & TOOLKIT', 'Languages · Frameworks · Platforms', [12.18, 2.7, 3.7], ['Java', 'JavaScript', 'Spring Boot', 'React'], 'skills');
-createInfoTerminal('EXPERIENCE', 'BCA · Alfamart · Professional history', [-12.18, 2.7, -0.2], ['BCA', 'Alfamart', 'Backend'], 'experience');
-createInfoTerminal('EDUCATION', 'Satya Wacana · Informatics Engineering', [-12.18, 2.7, -4.2], ['Informatics', '2019–2023', 'GPA 3.94'], 'education');
+createInfoTerminal('EXPERIENCE', 'BCA · Alfamart · Professional history', [-12.18, 2.7, -1.2], ['BCA', 'Alfamart', 'Backend'], 'experience');
+createInfoTerminal('EDUCATION', 'Satya Wacana · Informatics Engineering', [-12.18, 2.7, -5.8], ['Informatics', '2019–2023', 'GPA 3.94'], 'education');
 createInfoTerminal('PROJECT ARCHIVE', 'Selected work · Internal projects', [12.18, 2.7, -5.8], ['Selected work', 'Internal systems'], 'projects');
 createInfoTerminal('CONTACT', 'GitHub · LinkedIn · Instagram', [12.18, 2.7, -1.2], ['GitHub', 'LinkedIn', 'Instagram'], 'contact');
 
